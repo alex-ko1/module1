@@ -22,3 +22,12 @@
 
 # Ignore .env files as they are personal
 /.env
+
+mutagen.yml.lock
+/.idea/
+/vendor/
+
+web/themes/**/node_modules/
+
+/.docksal/
+docker-compose.yml
