@@ -12,4 +12,9 @@
     text-align: center;
     font-size: 35px;
 }
+.path-alex{
+    header, .region-breadcrumb, footer{
+        display: none;
+    }
+}
 @import 'form';

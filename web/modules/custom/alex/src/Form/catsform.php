@@ -35,7 +35,17 @@ class catsform extends FormBase {
     return $form;
   }
 
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    if (strlen($form_state->getValue('cat_name')) < 2) {
+      $form_state->setErrorByName('cat_name', $this->t('The name is to short'));
+    }
+    elseif (strlen($form_state->getValue('cat_name')) > 32) {
+      $form_state->setErrorByName('cat_name', $this->t('The name is to long'));
+    }
+  }
+
   public function submitForm(array &$form, FormStateInterface $form_state)
   {
+    \Drupal::messenger()->addMessage($this->t("You added a cat!"));
   }
 }
