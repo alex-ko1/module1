@@ -13,16 +13,18 @@ class catsform extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'example_form';
+    return 'cats_form';
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['phone_number'] = [
-      '#type' => 'tel',
-      '#title' => $this->t('Your cat`s name'),
+    $form['cat_name'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Your cat\'s name:'),
+      '#placeholder' => $this->t('min length - 2, max - 32 symbols'),
+      '#required' => true
     ];
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = [
@@ -33,20 +35,7 @@ class catsform extends FormBase {
     return $form;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    if (strlen($form_state->getValue('phone_number')) < 3) {
-      $form_state->setErrorByName('phone_number', $this->t('The phone number is too short. Please enter a full phone number.'));
-    }
+  public function submitForm(array &$form, FormStateInterface $form_state)
+  {
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->messenger()->addStatus($this->t('Your phone number is @number', ['@number' => $form_state->getValue('phone_number')]));
-  }
-
 }

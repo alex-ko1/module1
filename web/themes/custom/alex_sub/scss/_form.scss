@@ -1,0 +1,12 @@
+form.cats-form{
+    .form-item-cat-name{
+        input{
+            width: 320px;
+            margin: 20px auto 0;
+        }
+        margin-bottom: 0;
+    }
+    #edit-actions.form-actions{
+        margin-top: 0;
+    }
+}

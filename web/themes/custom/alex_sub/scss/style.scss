@@ -7,7 +7,9 @@
 
 // Include bootstrap.
 @import '../../../../themes/contrib/bootstrap5/scss/style';
+
 #block-alex-sub-content{
     text-align: center;
     font-size: 35px;
 }
+@import 'form';
