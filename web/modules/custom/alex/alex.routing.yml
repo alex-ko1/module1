@@ -1,0 +1,6 @@
+alex.content:
+  path: '/alex/cats'
+  defaults:
+    _controller: '\Drupal\alex\Controller\cats::content'
+  requirements:
+    _permission: 'access content'
