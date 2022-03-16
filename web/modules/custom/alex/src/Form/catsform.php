@@ -4,6 +4,7 @@ namespace Drupal\alex\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\MessageCommand;
+use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -13,7 +14,7 @@ class catsform extends FormBase
 
     public function getFormId()
     {
-        return 'cat_form';
+        return 'cats_form';
     }
 
     public function buildForm(array $form, FormStateInterface $form_state)
@@ -21,11 +22,20 @@ class catsform extends FormBase
 
         $form['cat_name'] = [
           '#type' => 'textfield',
-          '#title' => $this->t('Your cat’s name:'),
-          '#placeholder' => $this->t('Your name have to contain from 2 to 32 symbols'),
+          '#title' => $this->t('Your cat\'s name:'),
+          '#placeholder' => $this->t('min length - 2, max - 32 symbols'),
           '#required' => true,
         ];
-
+        $form['email'] = [
+          '#title' => 'Your email:',
+          '#type' => 'email',
+          '#required' => true,
+          '#placeholder' => $this->t('A-Z, a-z, -, _.'),
+          '#ajax' => [
+            'callback' => '::emailMessage',
+            'event' => 'keyup',
+          ],
+        ];
         $form['actions']['#type'] = 'actions';
         $form['actions']['submit'] = [
           '#type' => 'submit',

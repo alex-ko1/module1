@@ -1,0 +1,6 @@
+evilargest_library:
+  css:
+    base:
+      css/style.css: {}
+  js:
+    js/evilargest.js: {}
