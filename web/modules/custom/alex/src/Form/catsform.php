@@ -32,6 +32,9 @@ class catsform extends FormBase
         '#ajax' => [
           'callback' => '::validateEmailAjax',
           'event' => 'input',
+          'progress' => [
+            'type' => 'none',
+          ],
         ],
         '#suffix' => '<div class="email-validation-message"></div>'
       ];
