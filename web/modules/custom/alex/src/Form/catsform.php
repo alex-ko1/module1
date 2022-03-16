@@ -38,7 +38,21 @@ class catsform extends FormBase
         ],
         '#suffix' => '<div class="email-validation-message"></div>'
       ];
-      $form['actions']['#type'] = 'actions';
+    $form['my_file'] = array(
+      '#type' => 'managed_file',
+      '#title' => 'Add image:',
+      '#name' => 'my_custom_file',
+      '#description' => $this->t('format: jpg, jpeg, png <br> max-size: 2MB'),
+      '#required' => TRUE,
+      '#upload_validators' => [
+        'file_validate_is_image' => array(),
+        'file_validate_extensions' => array('jpg jpeg png'),
+        'file_validate_size' => array(2097152)
+      ],
+      '#upload_location' => 'public://files'
+    );
+
+    $form['actions']['#type'] = 'actions';
       $form['actions']['submit'] = [
         '#type' => 'submit',
         '#value' => $this->t('Add cat'),
@@ -57,13 +71,13 @@ class catsform extends FormBase
     } elseif (strlen($form_state->getValue('cat_name')) >32) {
         $form_state->setErrorByName('cat_name', $this->t('Please enter a shorter name.'));
     }
-    if (strpbrk($form_state->getValue('email'), '1234567890!#$%^&*()+=`~?/<>\'±§[]{}|"')){
+    if (strpbrk($form_state->getValue('email'), '1234567890!#$%^&*()+=:;`~?/<>\'±§[]{}|"')){
       $form_state->setErrorByName('email', $this->t('Please enter a valid email.'));
     }
   }
   public function validateEmailAjax(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
-    if (strpbrk($form_state->getValue('email'), '1234567890!#$%^&*()+=`~?/<>\'±§[]{}|"')) {
+    if (strpbrk($form_state->getValue('email'), '1234567890!#$%^&*()+=:;`~?/<>\'±§[]{}|"')) {
       $response->addCommand(new HtmlCommand('.email-validation-message', 'Invalid email'));
     }
     else {

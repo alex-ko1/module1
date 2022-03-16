@@ -1,11 +1,14 @@
 form.cats-form{
     .form-item-cat-name,
     .form-item-email{
+        margin-bottom: 0;
         input{
             width: 320px;
-            margin: 20px auto 0;
+            margin: 20px auto 10px;
         }
-        margin-bottom: 0;
+        label{
+            font-size: 24px;
+        }
     }
     #edit-actions.form-actions{
         margin-top: 0;
@@ -14,5 +17,9 @@ form.cats-form{
         font-size: 14px;
         color: red;
         font-weight: bold;
+    }
+    div .form-item-my-custom-file{
+        width: 370px;
+        margin: 20px auto;
     }
 }
