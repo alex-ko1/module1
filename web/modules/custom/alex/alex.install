@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * Install, create tables to store reviews.
+ */
+
+use Drupal\file\Entity\File;
+
+/**
+ * Implements hook_schema().
+ */
+
+function alex_schema(): array{
+    $schema['alex'] = array (
+        'description'=>'The table of contestants',
+        'fields' => [
+            'id' => [
+              'description' => 'Primary key',
+              'type' => 'serial',
+              'not null' => TRUE,
+              'unsigned' => TRUE,
+            ],
+            'name' => [
+                'description' => 'Cat name',
+                'type' => 'varchar',
+                'length' => 32,
+                'not null' => TRUE,
+            ],
+            'email' => [
+                'description' => 'User email',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+            ],
+            'image' => [
+              'description' => 'User image',
+              'type' => 'varchar',
+              'length' => 255,
+            ],
+            'timestamp' => [
+                    'description' => 'Timestamp',
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'not null' => true,
+                    'default' => 0,
+                  ],
+            ],
+        'primary key' => ['id'],
+    );
+    return $schema;
+}
+function alex_uninstall($is_syncing) {
+  $database = Drupal::database();
+  $result = $database->select('alex', 'a')
+    ->fields('a', ['image'])
+    ->execute();
+  foreach ($result as $row) {
+    if($row->image){
+      File::load($row->image)->delete();
+    }
+  }
+}
