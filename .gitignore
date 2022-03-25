@@ -31,3 +31,4 @@ web/themes/**/node_modules/
 
 /.docksal/
 docker-compose.yml
+.DS_Store

@@ -8,6 +8,7 @@ libraries:
 stylesheets-remove:
   - '@bootstrap5/css/style.css'
 regions:
+  headerline: headerline
   header: Header
   nav_branding: 'Navigation branding region'
   nav_main: 'Main navigation region'

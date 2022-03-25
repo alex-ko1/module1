@@ -19,7 +19,42 @@ form.cats-form{
         font-weight: bold;
     }
     div .form-item-my-custom-file{
-        width: 370px;
+        width: 320px;
         margin: 20px auto;
+    }
+    .form-item-my-custom-file {
+        border-width: 0;
+        label.form-required{
+            background-color: transparent;
+            border-bottom-width: 0;
+            font-size: 24px;
+        }
+        .form-managed-file{
+            border: solid #dfdfdf;
+            border-width: 1px 1px 0;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            padding-bottom: 0;
+            [data-drupal-selector="edit-my-file-remove-button"]{
+                font-size: 15px;
+                padding: 2px 4px;
+                background-color: #b2242f;
+                border-color: #b2242f;
+            } 
+        }
+        .description{
+            border: solid #dfdfdf;
+            border-width: 0 1px 1px;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            padding-top: 4px;
+            padding-bottom: 6px;
+        }
+    }
+}
+table.table{
+    td{
+        border-left: 2px solid #e9ecef;
+        border-right: 2px solid #e9ecef;
     }
 }

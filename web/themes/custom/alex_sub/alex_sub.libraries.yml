@@ -2,3 +2,9 @@ global-styling:
   css:
     theme:
       css/style.css: {}
+
+catpage:
+  css:
+    theme:
+      css/cats.css: {}
+

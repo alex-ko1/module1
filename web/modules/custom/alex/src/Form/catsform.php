@@ -2,11 +2,12 @@
 
 namespace Drupal\alex\Form;
 
-use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\MessageCommand;
+use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\file\Entity\File;
 
 class catsform extends FormBase
 {
@@ -49,7 +50,7 @@ class catsform extends FormBase
         'file_validate_extensions' => array('jpg jpeg png'),
         'file_validate_size' => array(2097152)
       ],
-      '#upload_location' => 'public://files'
+      '#upload_location' => 'public://files',
     );
 
     $form['actions']['#type'] = 'actions';
@@ -64,20 +65,20 @@ class catsform extends FormBase
       return $form;
   }
 
-  public function validateForm(array &$form, FormStateInterface $form_state)
+    public function validateForm(array &$form, FormStateInterface $form_state)
   {
     if (strlen($form_state->getValue('cat_name')) < 2) {
         $form_state->setErrorByName('cat_name', $this->t('Please enter a longer name.'));
     } elseif (strlen($form_state->getValue('cat_name')) >32) {
         $form_state->setErrorByName('cat_name', $this->t('Please enter a shorter name.'));
     }
-    if (strpbrk($form_state->getValue('email'), '1234567890!#$%^&*()+=:;`~?/<>\'±§[]{}|"')){
+    if (strpbrk($form_state->getValue('email'), '1234567890!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')){
       $form_state->setErrorByName('email', $this->t('Please enter a valid email.'));
     }
   }
   public function validateEmailAjax(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
-    if (strpbrk($form_state->getValue('email'), '1234567890!#$%^&*()+=:;`~?/<>\'±§[]{}|"')) {
+    if (strpbrk($form_state->getValue('email'), '1234567890!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')) {
       $response->addCommand(new HtmlCommand('.email-validation-message', 'Invalid email'));
     }
     else {
@@ -89,7 +90,22 @@ class catsform extends FormBase
 
   public function submitForm(array &$form, FormStateInterface $form_state)
   {
-
+    $image = $form_state->getValue('image');
+    //If the image is uploaded, save it in the database
+    if ($image) {
+      $file = File::load($image[2097152]);
+      $file->setPermanent();
+      $file->save();
+    }
+    // Database connection
+    $database = \Drupal::database();
+    $database->insert('alex')
+      ->fields([
+        'name' => $form_state->getValue('cat_name'),
+        'email' => $form_state->getValue('email'),
+        'image' => $image[2097152],
+      ])
+      ->execute();
   }
   public function setMessage(array $form, FormStateInterface $form_state)
   {
