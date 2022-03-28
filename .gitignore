@@ -31,4 +31,8 @@ web/themes/**/node_modules/
 
 /.docksal/
 docker-compose.yml
+
+# OS generated files #
+######################
 .DS_Store
+.DS_Store?

@@ -90,20 +90,20 @@ class catsform extends FormBase
 
   public function submitForm(array &$form, FormStateInterface $form_state)
   {
-    $image = $form_state->getValue('image');
+    $image = $form_state->getValue('my_file');
     //If the image is uploaded, save it in the database
+    $database = \Drupal::database();
     if ($image) {
-      $file = File::load($image[2097152]);
+      $file = File::load($image[0]);
       $file->setPermanent();
       $file->save();
     }
     // Database connection
-    $database = \Drupal::database();
     $database->insert('alex')
       ->fields([
         'name' => $form_state->getValue('cat_name'),
         'email' => $form_state->getValue('email'),
-        'image' => $image[2097152],
+        'image' => $image[0],
       ])
       ->execute();
   }

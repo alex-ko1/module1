@@ -26,15 +26,25 @@ class CatsController{
   {
     $query= \Drupal::database();
     $result = $query->select('alex', 'a')
-      ->fields('a', ['name', 'email', 'timestamp'])
+      ->fields('a', ['name', 'email','image', 'timestamp'])
       ->orderBy('id', 'DESC')
       ->execute()->fetchAll();
     $data = [];
     foreach ($result as $row) {
+      $file = File::load($row->image);
+      $uri = $file->getFileUri();
+      $catImage = [
+        '#theme' => 'image',
+        '#uri' => $uri,
+        '#alt' => 'Cat',
+        '#width' => 125,
+      ];
       $data[] = [
         'name' => $row->name,
         'email' => $row->email,
-        //'image' => File::load($row->image)->getFileUri(),
+        'image' => [
+          'data' => $catImage,
+        ],
         'timestamp' => $row->timestamp,
       ];
     }

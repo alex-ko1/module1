@@ -53,8 +53,13 @@ form.cats-form{
     }
 }
 table.table{
+    vertical-align: middle;
+    tbody tr td:nth-child(4){
+        width: 330px;
+        height: 200px;
+    }
     td{
-        border-left: 2px solid #e9ecef;
-        border-right: 2px solid #e9ecef;
+        border-left: 2px solid #dee2e6;
+        border-right: 2px solid #dee2e6;
     }
 }
