@@ -72,13 +72,13 @@ class catsform extends FormBase
     } elseif (strlen($form_state->getValue('cat_name')) >32) {
         $form_state->setErrorByName('cat_name', $this->t('Please enter a shorter name.'));
     }
-    if (strpbrk($form_state->getValue('email'), '1234567890!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')){
+    if (strpbrk($form_state->getValue('email'), ' 1234567890!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')){
       $form_state->setErrorByName('email', $this->t('Please enter a valid email.'));
     }
   }
   public function validateEmailAjax(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
-    if (strpbrk($form_state->getValue('email'), '1234567890!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')) {
+    if (strpbrk($form_state->getValue('email'), ' 1234567890!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')) {
       $response->addCommand(new HtmlCommand('.email-validation-message', 'Invalid email'));
     }
     else {

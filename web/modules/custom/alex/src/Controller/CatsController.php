@@ -38,6 +38,9 @@ class CatsController{
         '#uri' => $uri,
         '#alt' => 'Cat',
         '#width' => 125,
+        '#attributes' => [
+          'target'=>['_blank']
+          ],
       ];
       $data[] = [
         'name' => $row->name,
@@ -45,7 +48,7 @@ class CatsController{
         'image' => [
           'data' => $catImage,
         ],
-        'timestamp' => $row->timestamp,
+        'timestamp' => date('d/m/Y H:i:s',$row->timestamp),
       ];
     }
     $build['table'] = [
