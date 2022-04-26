@@ -12,9 +12,35 @@
     text-align: center;
     //font-size: 35px;
 }
-.path-alex{
-    header, .region-breadcrumb, footer{
-        display: none;
+header nav.navbar{
+    justify-content: center;
+    .region.region-nav-additional{
+        display: flex;
     }
 }
+#block-alex-sub-breadcrumbs{
+    margin-left: 5%;
+}
+.ui-dialog.ui-corner-all.ui-widget.ui-widget-content{
+    border-radius: 5px;
+    .ui-dialog-titlebar.ui-corner-all.ui-widget-header{
+        background-color: #fff;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+
+    }
+    form.delete-form.confirmation{
+        margin: 20px;
+    }
+    .ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix{
+        background-color: #fff;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+}
+// .path-alex{
+//     header, .region-breadcrumb, footer{
+//         display: none;
+//     }
+// }
 @import 'form';

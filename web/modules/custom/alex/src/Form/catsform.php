@@ -16,7 +16,6 @@ class catsform extends FormBase
   {
       return 'cats_form';
   }
-
   public function buildForm(array $form, FormStateInterface $form_state)
   {
       $form['cat_name'] = [
@@ -72,13 +71,13 @@ class catsform extends FormBase
     } elseif (strlen($form_state->getValue('cat_name')) >32) {
         $form_state->setErrorByName('cat_name', $this->t('Please enter a shorter name.'));
     }
-    if (strpbrk($form_state->getValue('email'), ' 1234567890!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')){
+    if (strpbrk($form_state->getValue('email'), '0123456789!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')){
       $form_state->setErrorByName('email', $this->t('Please enter a valid email.'));
     }
   }
   public function validateEmailAjax(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
-    if (strpbrk($form_state->getValue('email'), ' 1234567890!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')) {
+    if (strpbrk($form_state->getValue('email'), '0123456789!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')) {
       $response->addCommand(new HtmlCommand('.email-validation-message', 'Invalid email'));
     }
     else {
@@ -104,11 +103,13 @@ class catsform extends FormBase
         'name' => $form_state->getValue('cat_name'),
         'email' => $form_state->getValue('email'),
         'image' => $image[0],
+        //'timestamp' => date('d/m/Y H:i:s'),
       ])
       ->execute();
   }
   public function setMessage(array $form, FormStateInterface $form_state)
   {
+    $cat_name = $form_state->getValue('cat_name');
     $response = new AjaxResponse();
     if ($form_state->hasAnyErrors()) {
       foreach ($form_state->getErrors() as $errors_array) {
@@ -116,7 +117,7 @@ class catsform extends FormBase
       }
     }
     else {
-      $response->addCommand(new MessageCommand('You added a cat!'));
+      $response->addCommand(new MessageCommand('You added a cat ' . $cat_name .' ! '));
     }
     \Drupal::messenger()->deleteAll();
     return $response;

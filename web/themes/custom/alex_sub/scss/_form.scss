@@ -41,6 +41,9 @@ form.cats-form{
                 background-color: #b2242f;
                 border-color: #b2242f;
             } 
+            input.form-file.error{
+                width: 100%;
+            }
         }
         .description{
             border: solid #dfdfdf;
@@ -51,15 +54,48 @@ form.cats-form{
             padding-bottom: 6px;
         }
     }
+    .alert.alert-error.alert-danger.alert-dismissible.fade.show{
+        .item-list ul li{
+            width: fit-content;
+            margin: 0 auto;
+        }
+    }
 }
 table.table{
     vertical-align: middle;
+    width: 90%;
+    margin: 0 auto;
     tbody tr td:nth-child(4){
         width: 330px;
         height: 200px;
     }
     td{
-        border-left: 2px solid #dee2e6;
-        border-right: 2px solid #dee2e6;
+        border: 2px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
+    }
+    tr.even{
+        position: relative;
+        border-width: 0px;
+        td{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border-width: 1px;
+            padding: 6px 8px;
+            border-radius: 2px;
+            a{
+                text-decoration: none;
+                &:hover{
+                    color: #2f88ff;
+                }
+                &:first-child::after{
+                    content: '/ ';
+                    color: #000;
+                    &:hover{
+                        color: #000;
+                    }
+                }
+            }
+        }
     }
 }

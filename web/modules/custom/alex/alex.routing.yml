@@ -3,6 +3,16 @@ alex.content:
   defaults:
     _controller: '\Drupal\alex\Controller\CatsController::content'
     _title: 'Hello! You can add here a photo of your cat.'
-    #_form: '\Drupal\alex\Form\catsform'
   requirements:
     _permission: 'access content'
+
+delete.content:
+  path: '/alex/cats/{id}/delete'
+  defaults:
+    _form: '\Drupal\alex\Form\Catsdelete'
+  requirements:
+    _role: 'administrator'
+    _permission: 'administrator'
+
+edit.content:
+  path: '/alex/cats/{id}'
