@@ -12,7 +12,7 @@ use Drupal\file\Entity\File;
  */
 
 function alex_schema(): array{
-    $schema['alex'] = array (
+    $schema['alex'] = [
         'description'=>'The table of contestants',
         'fields' => [
             'id' => [
@@ -39,18 +39,27 @@ function alex_schema(): array{
               'length' => 255,
             ],
             'timestamp' => [
-              'description' => 'Timestamp',
+              'description' => 'Date create',
               'type' => 'int',
-              'unsigned' => TRUE,
-              'not null' => true,
+              'length' => 20,
+              'not null' => TRUE,
               'default' => 0,
               ],
             ],
         'primary key' => ['id'],
-    );
+    ];
     return $schema;
 }
-function alex_uninstall()
-{
-    \Drupal::state()->delete('alex.alex');
+function alex_uninstall($is_syncing) {
+  $database = Drupal::database();
+  $result = $database->select('alex', 'a')
+    ->fields('a', ['image'])
+    ->execute();
+  foreach ($result as $row) {
+    if($row->image){
+      File::load($row->image)->delete();
+    }
+  }
+  \Drupal::state()->delete('alex.alex');
 }
+

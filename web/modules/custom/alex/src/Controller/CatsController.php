@@ -23,7 +23,7 @@ class CatsController{
       '#list'=>$this->catsList(),
     ];
   }
-  public function catsList(): array
+  public function catsList()
   {
     $current_user = \Drupal::currentUser();
     $roles = $current_user->getRoles();
@@ -81,15 +81,15 @@ class CatsController{
             'library' => ['core/drupal.dialog.ajax'],
           ],
         ];
-        $variable['link'] = [
+        $links['link'] = [
           'data' => [
             "#theme" => 'operations',
             'delete' => $delete_link,
             'edit' => $edit_link,
           ],
         ];
+      $data[] = $links;
       }
-      $data[] = $variable;
     }
     $build['table'] = [
       '#type' => 'table',

@@ -2,6 +2,7 @@
 
 namespace Drupal\alex\Form;
 
+use Drupal\Core\Form\mysql;
 use Drupal\Core\Ajax\MessageCommand;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
@@ -99,11 +100,12 @@ class catsform extends FormBase
     }
     // Database connection
     $database->insert('alex')
-      ->fields([
+      ->fields(['name', 'email', 'image'])
+      ->values([
         'name' => $form_state->getValue('cat_name'),
         'email' => $form_state->getValue('email'),
         'image' => $image[0],
-        //'timestamp' => date('d/m/Y H:i:s'),
+        //'timestamp' => date('Y-m-d H:i:s'),
       ])
       ->execute();
   }

@@ -15,4 +15,4 @@ delete.content:
     _permission: 'administrator'
 
 edit.content:
-  path: '/alex/cats/{id}'
+  path: '/alex/cats/{id}/edit'
