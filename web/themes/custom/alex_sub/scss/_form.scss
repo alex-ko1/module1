@@ -61,6 +61,12 @@ form.cats-form{
         }
     }
 }
+[data-drupal-selector="edit-image-remove-button"]{
+    font-size: 15px;
+    padding: 2px 4px;
+    background-color: #b2242f;
+    border-color: #b2242f;
+} 
 table.table{
     vertical-align: middle;
     width: 90%;
@@ -87,6 +93,9 @@ table.table{
                 text-decoration: none;
                 &:hover{
                     color: #2f88ff;
+                }
+                &:first-child:hover{
+                    color: #b2242f;   
                 }
                 &:first-child::after{
                     content: '/ ';

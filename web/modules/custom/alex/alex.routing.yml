@@ -16,3 +16,9 @@ delete.content:
 
 edit.content:
   path: '/alex/cats/{id}/edit'
+  defaults:
+    _form: '\Drupal\alex\Form\CatsEdit'
+    _title: 'Edit cat'
+  requirements:
+    _role: 'administrator'
+    _permission: 'administrator'

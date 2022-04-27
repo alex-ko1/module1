@@ -32,7 +32,7 @@ class catsform extends FormBase
         '#placeholder' => $this->t('A-Z, a-z, -, _.'),
         '#ajax' => [
           'callback' => '::validateEmailAjax',
-          'event' => 'input',
+          'event' => 'change',
           'progress' => [
             'type' => 'none',
           ],

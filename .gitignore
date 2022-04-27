@@ -38,5 +38,4 @@ docker-compose.yml
 .DS_Store?
 DS_Store
 
-CatsEdit.php
 catlist_links.links.menu.yml

@@ -48,10 +48,10 @@ class CatsController{
       ];
       $data[] = [
         'name' => $row->name,
-        'email' => $row->email,
         'image' => [
           'data' => $catImage,
         ],
+        'email' => $row->email,
         'timestamp' => date('d/m/Y H:i:s',$row->timestamp),
       ];
       if (in_array($admin, $roles)) {
