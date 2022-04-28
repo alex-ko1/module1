@@ -97,7 +97,7 @@ class CatsEdit extends FormBase
     $file = File::load($image[0]);
     $file->setPermanent();
     $file->save();
-    $query = \Drupal::database()->update('rgb')
+    $query = \Drupal::database()->update('alex')
       ->condition('id', $this->id)
       ->fields([
         'name' => $form_state->getValue('cat_name'),
