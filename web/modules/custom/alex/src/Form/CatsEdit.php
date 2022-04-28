@@ -14,8 +14,6 @@ use Drupal\file\Entity\File;
 class CatsEdit extends FormBase
 {
 
-  protected object $cat;
-
   public function getFormId() {
     return "Cats_Edit";
   }
@@ -40,7 +38,7 @@ class CatsEdit extends FormBase
       '#required' => TRUE,
       '#default_value' => $data[0]->email,
       '#ajax' => [
-        'callback' => '::validateEmailAjax',
+        'callback' => '::validateAjax',
         'event' => 'change',
         'disabled' => FALSE,
       ]
@@ -80,14 +78,14 @@ class CatsEdit extends FormBase
       $form_state->setErrorByName('email', $this->t('Please enter a valid email.'));
     }
   }
-  public function validateEmailAjax(array &$form, FormStateInterface $form_state) {
+  public function validateAjax(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
     if (strpbrk($form_state->getValue('email'), '0123456789!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')) {
-      $response->addCommand(new HtmlCommand('.email-validation-message', 'Invalid email'));
+      $response->addCommand(new HtmlCommand('.email-validation-popup-message', 'Invalid email'));
     }
     else {
       # Убираем ошибку если она была и пользователь изменил почтовый адрес.
-      $response->addCommand(new HtmlCommand('.email-validation-message', ''));
+      $response->addCommand(new HtmlCommand('.email-validation-popup-message', ''));
     }
     return $response;
   }
@@ -97,7 +95,8 @@ class CatsEdit extends FormBase
     $file = File::load($image[0]);
     $file->setPermanent();
     $file->save();
-    $query = \Drupal::database()->update('alex')
+    $query = \Drupal::database();
+    $query->update('alex')
       ->condition('id', $this->id)
       ->fields([
         'name' => $form_state->getValue('cat_name'),
@@ -105,6 +104,7 @@ class CatsEdit extends FormBase
         'image' => $image[0],
       ])
       ->execute();
+    $form_state->setRedirect('alex.content');
   }
   public function setMessage(array $form, FormStateInterface $form_state)
   {
