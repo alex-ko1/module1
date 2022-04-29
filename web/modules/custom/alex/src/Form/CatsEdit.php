@@ -23,7 +23,7 @@ class CatsEdit extends FormBase
     $query = \Drupal::database();
     $data = $query
       ->select('alex', 'a')
-      ->condition('a.id', $id, '=')
+      ->condition('id', $id, '=')
       ->fields('a', ['name', 'email', 'image', 'id'])
       ->execute()->fetchAll();
     $form['cat_name'] = [
@@ -39,8 +39,8 @@ class CatsEdit extends FormBase
       '#default_value' => $data[0]->email,
       '#ajax' => [
         'callback' => '::validateAjax',
-        'event' => 'change',
-        'disabled' => FALSE,
+        'event' => 'keyup',
+        //'disabled' => FALSE,
       ]
     ];
     $form['image'] = [
@@ -78,7 +78,7 @@ class CatsEdit extends FormBase
       $form_state->setErrorByName('email', $this->t('Please enter a valid email.'));
     }
   }
-  public function validateAjax(array &$form, FormStateInterface $form_state) {
+  public function validateAjax(array &$form, FormStateInterface $form_state): AjaxResponse {
     $response = new AjaxResponse();
     if (strpbrk($form_state->getValue('email'), '0123456789!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')) {
       $response->addCommand(new HtmlCommand('.email-validation-popup-message', 'Invalid email'));
@@ -105,6 +105,7 @@ class CatsEdit extends FormBase
       ])
       ->execute();
     $form_state->setRedirect('alex.content');
+    return new Url('alex.content');
   }
   public function setMessage(array $form, FormStateInterface $form_state)
   {

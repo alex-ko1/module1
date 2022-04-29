@@ -21,6 +21,10 @@ header nav.navbar{
 #block-alex-sub-breadcrumbs{
     margin-left: 5%;
 }
+.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog-buttons{
+    width: 380px !important;
+    left: 540px !important;
+}
 .ui-dialog.ui-corner-all.ui-widget.ui-widget-content{
     border-radius: 5px;
     .ui-dialog-titlebar.ui-corner-all.ui-widget-header{
