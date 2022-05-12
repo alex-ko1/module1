@@ -80,8 +80,12 @@ table.table{
         border-bottom: 1px solid #dee2e6;
     }
 }
+tr.even{
+    display: none;
+}
 .user-logged-in{
     tr.even{
+        display: table-row;
         position: relative;
         border-width: 0px;
         td{

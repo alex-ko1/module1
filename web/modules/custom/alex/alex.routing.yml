@@ -9,7 +9,7 @@ alex.content:
 delete.content:
   path: '/alex/cats/{id}/delete'
   defaults:
-    _form: '\Drupal\alex\Form\Catsdelete'
+    _form: '\Drupal\alex\Form\CatsDelete'
   requirements:
     _role: 'administrator'
     _permission: 'administrator'

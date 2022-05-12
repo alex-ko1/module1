@@ -14,11 +14,11 @@ use Drupal\file\Entity\File;
 class CatsEdit extends FormBase
 {
 
-  public function getFormId() {
+  public function getFormId(): string {
     return "Cats_Edit";
   }
 
-  public function buildForm(array $form, FormStateInterface $form_state, $id = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $id = NULL): array {
     $this->id = $id;
     $query = \Drupal::database();
     $data = $query
@@ -38,8 +38,11 @@ class CatsEdit extends FormBase
       '#required' => TRUE,
       '#default_value' => $data[0]->email,
       '#ajax' => [
-        'callback' => '::validateAjax',
-        'event' => 'keyup',
+        'callback' => '::validateAjaxEmail',
+        'event' => 'change',
+        'progress' => [
+          'type' => 'throbber',
+        ],
         //'disabled' => FALSE,
       ]
     ];
@@ -78,17 +81,6 @@ class CatsEdit extends FormBase
       $form_state->setErrorByName('email', $this->t('Please enter a valid email.'));
     }
   }
-  public function validateAjax(array &$form, FormStateInterface $form_state): AjaxResponse {
-    $response = new AjaxResponse();
-    if (strpbrk($form_state->getValue('email'), '0123456789!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')) {
-      $response->addCommand(new HtmlCommand('.email-validation-popup-message', 'Invalid email'));
-    }
-    else {
-      # Убираем ошибку если она была и пользователь изменил почтовый адрес.
-      $response->addCommand(new HtmlCommand('.email-validation-popup-message', ''));
-    }
-    return $response;
-  }
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // TODO: Implement submitForm() method.
     $image = $form_state->getValue('image');
@@ -105,19 +97,17 @@ class CatsEdit extends FormBase
       ])
       ->execute();
     $form_state->setRedirect('alex.content');
-    return new Url('alex.content');
   }
-  public function setMessage(array $form, FormStateInterface $form_state)
-  {
+  public function setMessage(array $form, FormStateInterface $form_state): AjaxResponse {
     $cat_name = $form_state->getValue('cat_name');
     $response = new AjaxResponse();
     if ($form_state->hasAnyErrors()) {
       foreach ($form_state->getErrors() as $errors_array) {
-        $response->addCommand(new MessageCommand($errors_array, NULL, ['type'=>'error']));
+        $response->addCommand(new MessageCommand($errors_array, '#alternate-message-container', ['type'=>'error']));
       }
     }
     else {
-      $response->addCommand(new MessageCommand('You added a cat ' . $cat_name .' ! '));
+      $response->addCommand(new MessageCommand('You edit a cat ' . $cat_name .' ! '));
     }
     \Drupal::messenger()->deleteAll();
     return $response;

@@ -40,7 +40,7 @@ function alex_schema(): array{
             ],
             'timestamp' => [
               'description' => 'Date create',
-              'type' => 'int',
+              'type' => 'varchar',
               'length' => 20,
               'not null' => TRUE,
               'default' => 0,

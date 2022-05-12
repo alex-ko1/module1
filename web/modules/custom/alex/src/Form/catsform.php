@@ -34,7 +34,7 @@ class catsform extends FormBase
           'callback' => '::validateEmailAjax',
           'event' => 'change',
           'progress' => [
-            'type' => 'none',
+            'type' => 'throbber',
           ],
         ],
         '#suffix' => '<div class="email-validation-message"></div>'
@@ -76,7 +76,7 @@ class catsform extends FormBase
       $form_state->setErrorByName('email', $this->t('Please enter a valid email.'));
     }
   }
-  public function validateEmailAjax(array &$form, FormStateInterface $form_state) {
+  public function validateEmailAjax(array &$form, FormStateInterface $form_state): AjaxResponse {
     $response = new AjaxResponse();
     if (strpbrk($form_state->getValue('email'), '0123456789!#$%^&*()+=:;,`~?/<>\'±§[]{}|"')) {
       $response->addCommand(new HtmlCommand('.email-validation-message', 'Invalid email'));
@@ -100,12 +100,12 @@ class catsform extends FormBase
     }
     // Database connection
     $database->insert('alex')
-      ->fields(['name', 'email', 'image'])
+      ->fields(['name', 'email', 'image', 'timestamp'])
       ->values([
         'name' => $form_state->getValue('cat_name'),
         'email' => $form_state->getValue('email'),
         'image' => $image[0],
-        //'timestamp' => date('Y-m-d H:i:s'),
+        'timestamp' => date('d/m/Y H:i:s'),
       ])
       ->execute();
   }

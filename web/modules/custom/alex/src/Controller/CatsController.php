@@ -15,7 +15,7 @@ class CatsController{
   /*
    * Display simple page.
    */
-  public function content() {
+  public function content(): array {
     $form = \Drupal::formBuilder()->getForm('Drupal\alex\Form\catsform');
     return [
       '#theme' => 'cats-theme',
@@ -23,11 +23,7 @@ class CatsController{
       '#list'=>$this->catsList(),
     ];
   }
-  public function catsList()
-  {
-    $current_user = \Drupal::currentUser();
-    $roles = $current_user->getRoles();
-    $admin = "administrator";
+  public function catsList(): array {
     $query= \Drupal::database();
     $result = $query->select('alex', 'a')
       ->fields('a', ['name', 'email','image', 'timestamp','id'])
@@ -52,9 +48,8 @@ class CatsController{
           'data' => $catImage,
         ],
         'email' => $row->email,
-        'timestamp' => date('d/m/Y H:i:s',$row->timestamp),
+        'timestamp' => $row->timestamp,
       ];
-      if (in_array($admin, $roles)) {
         $url = Url::fromRoute('delete.content', ['id' => $row->id]);
         $url2 = Url::fromRoute('edit.content', ['id' => $row->id]);
         $delete_link = [
@@ -89,7 +84,6 @@ class CatsController{
           ],
         ];
       $data[] = $links;
-      }
     }
     $build['table'] = [
       '#type' => 'table',

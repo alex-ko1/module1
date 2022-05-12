@@ -17,11 +17,11 @@ class CatsDelete extends ConfirmFormBase {
 
   protected $id;
 
-  public function getFormId() {
+  public function getFormId(): string {
     return 'delete_form';
   }
 
-  public function buildForm(array $form, FormStateInterface $form_state, $id = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $id = NULL): array {
     $this->id = $id;
     return parent::buildForm($form, $form_state);
   }
@@ -49,7 +49,7 @@ class CatsDelete extends ConfirmFormBase {
     return $this->t('Delete cat @cat_name with id-%id ?', ['%id' => $result-> id, '@cat_name' => $result-> name]);
   }
 
-  public function getCancelUrl() {
+  public function getCancelUrl(): Url {
     return new Url('alex.content');
   }
 }
